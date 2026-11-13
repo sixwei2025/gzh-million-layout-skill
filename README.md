@@ -3,7 +3,7 @@
 <img src="assets/showcase/hero-banner.jpg" alt="公众号百万级排版 Skill — 100% 内联 CSS，排成百万阅读大号级公众号" width="100%" />
 
 # 公众号百万级排版 Skill
-### `gzh-million-layout-skill` · 汇芯红 `#C8102E` 六套内联 CSS 骨架 + 配图皮肤 + 乱码硬闸
+### `gzh-million-layout-skill` · 汇芯红 `#C8102E` 六套内联 CSS 骨架 + 配图皮肤 + 零乱码排版检查
 
 [![Agent Skills](https://img.shields.io/badge/Agent%20Skills-Specification-C8102E?style=flat-square)](https://agentskills.io)
 [![CSS](https://img.shields.io/badge/WeChat%20DOM-100%25%20Inline%20CSS%20·%20Zero%20Class-18181B?style=flat-square)](#二汇芯红六套排版骨架按内容结构选型)
@@ -14,17 +14,17 @@
 > 📮 更多 AI 工具实测与自动化实战，关注 **公众号 / 视频号：袁六伟**
 
 **写文两小时，微信后台调格式一小时——这是内容创作者最大的心流杀手。**  
-本 Skill 将百万阅读大号的版式控制力封装成 **6 套汇芯红 `#C8102E` 纯内联 CSS 骨架**，自带开篇引言卡、滑动章节看点、真 HTML 横滑表格、6 套配图皮肤与推送前 `sanitize` 乱码硬闸。复制粘贴或 API 推入微信草稿箱**零丢样式、深色模式不崩**。
+本 Skill 将百万阅读大号的版式控制力封装成 **6 套汇芯红 `#C8102E` 纯内联 CSS 骨架**，自带开篇引言卡、滑动章节看点、真 HTML 横滑表格、6 套配图皮肤与推送前 `sanitize` 零乱码排版检查。复制粘贴或 API 推入微信草稿箱**零丢样式、深色模式不崩**。
 
 ```bash
 # 一键安装 Skill
 npx skills add sixwei2025/gzh-million-layout-skill
 
-# 跑一遍推送前乱码与微信兼容性硬闸
+# 跑一遍推送前零乱码与微信格式兼容检查
 python3 skills/公众号百万级排版skill/scripts/gzh_design_sanitize.py article.html --write
 ```
 
-[为什么微信后台总吞样式](#一为什么普通排版进了微信后台就变塑料味) · [六套排版骨架](#二汇芯红六套排版骨架按内容结构选型) · [截图卡与数据卡](#三正文配图皮肤真实截图卡--结构化数据卡) · [六步排版流水线](#四六步排版与乱码硬闸流水线) · [安装与改造](#五快速安装与品牌色改造)
+[为什么微信后台总吞样式](#一为什么普通排版进了微信后台就变塑料味) · [六套排版骨架](#二汇芯红六套排版骨架按内容结构选型) · [截图卡与数据卡](#三正文配图皮肤真实截图卡--结构化数据卡) · [六步排版流水线](#四六步排版与零乱码质检流水线) · [安装与改造](#五快速安装与品牌色改造)
 
 </div>
 
@@ -36,8 +36,8 @@ python3 skills/公众号百万级排版skill/scripts/gzh_design_sanitize.py arti
 
 本仓库用三层工程约束解决「好看且能发出去」的问题：
 1. **视觉克制纪律（一套只用一个锚点色）**：全文统一使用汇芯红 `#C8102E` 作为唯一品牌锚点色，金句标红严格控制在 **3–6 处**（满屏标红等于没有重点）。
-2. **手机 375px 视口呼吸感**：正文 15–16px，行高 1.75–1.85，每段严格控制在 **40–60 字（硬上限 ≤80 字）**，彻底告别密不透风的文字墙。
-3. **100% `<section>` 内联样式 + 乱码硬闸**：所有组件编译为微信原生支持的纯内联 CSS，并在推箱前通过 `gzh_design_sanitize.py` 拦截 `&amp;quot;` 双重转义、残留反引号、半角标点与禁用标签。
+2. **手机 375px 视口呼吸感**：正文 15–16px，行高 1.75–1.85，每段严格控制在 **40–60 字（上限 ≤80 字）**，彻底告别密不透风的文字墙。
+3. **100% `<section>` 内联样式 + 零乱码排版检查**：所有组件编译为微信原生支持的纯内联 CSS，并在推箱前通过 `gzh_design_sanitize.py` 自动清理 `&amp;quot;` 双重转义、残留反引号、半角标点与禁用标签。
 
 ---
 
@@ -76,15 +76,15 @@ python3 skills/公众号百万级排版skill/scripts/gzh_design_sanitize.py arti
 
 ---
 
-## 四、六步排版与乱码硬闸流水线
+## 四、六步排版与零乱码质检流水线
 
 <p align="center">
   <img src="assets/showcase/pipeline-architecture.jpg" alt="公众号百万级排版六步流水线架构图" width="100%" />
 </p>
 
-### 推箱前必过硬闸（`references/乱码硬闸与检查清单.md`）
+### 推箱前必做格式检查
 
-| 检查项 | 拦截标准 | 自动处置方式 |
+| 检查项 | 质检标准 | 自动处置方式 |
 | :--- | :--- | :--- |
 | **双重转义与反引号** | 正文出现 `&quot;`、`&amp;quot;` 或未转换的 `` `code` `` | `gzh_design_sanitize.py --write` 自动修复或报错阻断 |
 | **禁用 CSS 属性** | `linear-gradient`、`display:grid`、`position:fixed`、`<div>` | 强制降级为微信支持的纯色背景与 `<section>` 弹性盒 |
@@ -100,7 +100,7 @@ python3 skills/公众号百万级排版skill/scripts/gzh_design_sanitize.py arti
 npx skills add sixwei2025/gzh-million-layout-skill
 
 # 2. 对 Agent 说人话即可排版
-# 「用公众号百万级排版skill，把这篇 Markdown 按杂志卡骨架排成公众号 HTML，过一遍乱码硬闸」
+# 「用公众号百万级排版skill，把这篇 Markdown 按杂志卡骨架排成公众号 HTML，做一遍零乱码检查」
 ```
 
 ### 3 步改成你自己的品牌色
@@ -118,7 +118,7 @@ gzh-million-layout-skill/
 ├── LICENSE                                    # MIT 开源许可
 ├── assets/showcase/                           # 6 套骨架并排图、截图卡/数据卡皮肤与架构图
 └── skills/公众号百万级排版skill/
-    ├── SKILL.md                               # 【总控入口】排版流程、组件装配与硬闸摘要
+    ├── SKILL.md                               # 【总控入口】排版流程、组件装配与质检摘要
     ├── author-bio.txt                         # 文末作者签名档模板（全文仅注入一次）
     ├── assets/
     │   └── poster-huixin-end.jpg              # 文末无边框、无二维码业务介绍海报
@@ -130,7 +130,7 @@ gzh-million-layout-skill/
     │   ├── 乱码硬闸与检查清单.md              # 微信后台吞样式黑名单与推箱前必检项
     │   └── 速查表与长图横拼.md                # 手机端横滑真表格与多图横拼规范
     └── scripts/
-        ├── gzh_design_sanitize.py             # ★ HTML 乱码清洗与微信兼容性硬闸脚本
+        ├── gzh_design_sanitize.py             # ★ HTML 乱码清洗与微信格式兼容检查脚本
         └── pack_bundle.py                     # 草稿打包辅助脚本（不含任何私钥）
 ```
 
@@ -149,17 +149,17 @@ gzh-million-layout-skill/
 
 | 仓库 | 领域 | 核心能力 |
 | :--- | :--- | :--- |
-| [**workbuddy-wechat-autopilot**](https://github.com/sixwei2025/workbuddy-wechat-autopilot) | 公众号全链路 | 九步硬闸总控：选题→写稿→真实截图→6套封面→6套排版→三重校验→草稿箱 |
-| [**wechat-cover-skill**](https://github.com/sixwei2025/wechat-cover-skill) | 公众号视觉 | 封面渲染引擎（6套高客单价杂志风 + 黑红金 v2b + DOM 几何硬闸） |
-| [**gzh-million-layout-skill**](https://github.com/sixwei2025/gzh-million-layout-skill) | 公众号排版 | 汇芯红 `#C8102E` 六套 100% 内联 CSS 骨架 + 乱码硬闸 + 配图皮肤 |
-| [**ai-tool-review-wechat-skill**](https://github.com/sixwei2025/ai-tool-review-wechat-skill) | 公众号评测 | AI 工具真跑评测工作流（5项一票否决 + 说人话硬闸 + 证据表） |
+| [**workbuddy-wechat-autopilot**](https://github.com/sixwei2025/workbuddy-wechat-autopilot) | 公众号全链路 | 九步全自动总控：选题→写稿→真实截图→6套封面→6套排版→三重自动质检→草稿箱 |
+| [**wechat-cover-skill**](https://github.com/sixwei2025/wechat-cover-skill) | 公众号视觉 | 封面渲染引擎（6套高客单价杂志风 + 黑红金 v2b + 防压脸自动校验） |
+| [**gzh-million-layout-skill**](https://github.com/sixwei2025/gzh-million-layout-skill) | 公众号排版 | 汇芯红 `#C8102E` 六套 100% 内联 CSS 骨架 + 零乱码检查 + 配图皮肤 |
+| [**ai-tool-review-wechat-skill**](https://github.com/sixwei2025/ai-tool-review-wechat-skill) | 公众号评测 | AI 工具真跑评测工作流（2.0 全自动压测 + 去碎句语感质检 + 六套骨架装配） |
 | [**hit-title-expert-skill**](https://github.com/sixwei2025/hit-title-expert-skill) | 爆款标题 | 一次直出 10 条 14–22 字高浓缩狠标题（5大公式 × 5类钩子词） |
 | [**auto-tutorial-skill**](https://github.com/sixwei2025/auto-tutorial-skill) | 短视频工程 | 链接/网页/真机截图 → 3:4 封面 + 1.5x 配音 + 红框标注教程视频 |
 | [**talking-head-video-skill**](https://github.com/sixwei2025/talking-head-video-skill) | 短视频工程 | 1080×1920 竖屏真人口播短视频（ASR 错字校对 + 逐字卡拉OK字幕 + 6项QC） |
 | [**3d-map-video-skill**](https://github.com/sixwei2025/3d-map-video-skill) | 短视频工程 | MapLibre 3D 地形 + WarFX 战争特效（粒子行军/点阵兵力/震屏混音） |
 | [**psych-kepu-video-skill**](https://github.com/sixwei2025/psych-kepu-video-skill) | 短视频工程 | Remotion + JSON 驱动的 15–30s 深色扁平动画心理科普短视频 |
 | [**dark-infographic-video-skill**](https://github.com/sixwei2025/dark-infographic-video-skill) | 短视频工程 | 纯 Python + FFmpeg 暗黑流光数据可视化科普片（含 v2 手机外放配乐） |
-| [**local-video-hub**](https://github.com/sixwei2025/local-video-hub) | AI 团队基建 | 视频版本地 Obsidian：多 AI 员工统一交片、去重门闸与四态流转云台 |
+| [**local-video-hub**](https://github.com/sixwei2025/local-video-hub) | AI 团队基建 | 视频版本地 Obsidian：多 AI 员工统一交片、撞题查重与四态流转云台 |
 | [**yuanliuwei-ai-skills**](https://github.com/sixwei2025/yuanliuwei-ai-skills) | 一人公司方法 | PACT 72h 需求验证模型与一人 AI 公司 10 大业务决策模块 |
 | [**book-skill**](https://github.com/sixwei2025/book-skill) | 知识工程 | 上传任意书籍 PDF → 自动提炼方法论生成 `.skill` + 公众号导流文案 |
 | [**huangdi-skill**](https://github.com/sixwei2025/huangdi-skill) | 认知操作系统 | 中国历史八大皇帝（秦始皇/汉武帝/唐太宗等）一手史料认知框架蒸馏 |
